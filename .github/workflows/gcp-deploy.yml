@@ -1,49 +1,43 @@
-name: Deploy to Cloud Run
-
-env:
-  SERVICE_NAME: todolist
-  PROJECT_ID: pucpr-devops
-  DOCKER_IMAGE_URL: us-central1-docker.pkg.dev/pucpr-devops/todolist/todolist
+name: Deploy to Google Cloud Run
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
     branches:
       - main
 
 jobs:
-  dockerize-and-deploy:
+  deploy:
+    name: Deploy to Cloud Run
     runs-on: ubuntu-latest
 
+    env:
+      IMAGE_NAME: gcr.io/${{ secrets.GCP_PROJECT_ID }}/todolist:latest
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Google Cloud Auth
-        uses: "google-github-actions/auth@v2"
+      - name: Authenticate with GCP
+        uses: google-github-actions/auth@v2
         with:
-          credentials_json: "${{ secrets.GCP_SA_KEY }}"
-          project_id: ${{ env.PROJECT_ID }}
+          credentials_json: ${{ secrets.secrets.GCP_CREDENTIALS }}
 
-      - name: Set up Cloud SDK
-        uses: "google-github-actions/setup-gcloud@v2"
+      - uses: google-github-actions/setup-gcloud@v2
+        with:
+          service_account_key: ${{ secrets.GCP_CREDENTIALS }}
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
 
       - name: Configure Docker
-        run: |
-          gcloud auth configure-docker us-central1-docker.pkg.dev
+        run: gcloud auth configure-docker --quiet
 
-      - name: Build and Push Docker Image
+      - name: Build Docker image
         run: |
-          docker build -t ${{ env.DOCKER_IMAGE_URL }}:latest .
-          docker push ${{ env.DOCKER_IMAGE_URL }}:latest
+          echo "Buildando imagem"
+          docker build -t $IMAGE_NAME .
 
-      - name: Deploy to Cloud Run
+      - name: Push image
         run: |
-          echo SERVICE_NAME $SERVICE_NAME
-          gcloud run deploy $SERVICE_NAME \
-            --image ${{ env.DOCKER_IMAGE_URL }}:latest \
-            --platform managed \
-            --region us-central1 \
-            --allow-unauthenticated
+          echo "Fazendo push para o A.R"
+          docker push $IMAGE_NAME
+
+      - name: gcloud deploy
+        run: gcloud run deploy todolist-app  --image $IMAGE_NAME --region us-central1 --allow-unauthenticated
