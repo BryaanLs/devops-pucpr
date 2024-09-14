@@ -7,42 +7,30 @@ on:
 
 jobs:
   deploy:
+    name: Deploy to Cloud Run
     runs-on: ubuntu-latest
 
+    env:
+      IMAGE_NAME: gcr.io/${{ secrets.GCP_PROJECT_ID }}/todolist-image:latest
     steps:
-      # Checkout do código do repositório
-      - name: Check out repository code
+      - name: Checkout
         uses: actions/checkout@v4
 
-      # Configurar o Google Cloud SDK
-      - name: Set up Google Cloud SDK
-        uses: google-github-actions/setup-gcloud@v2
+      - uses: google-github-actopms/setup-gcloud@v2
         with:
+          service_account_key: ${{ secrets.GCP_CREDENTIALS }}
           project_id: ${{ secrets.GCP_PROJECT_ID }}
-          credentials: ${{ secrets.GCP_CREDENTIALS }}
 
-      # Configurar Docker Buildx
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+      - name: Configure Docker
+        run: gcloud auth configure-docker --quiet
 
-      # Logar no Google Container Registry
-      - name: Configure Docker for Google Cloud
+      - name: Build Docker image
         run: |
-          gcloud auth configure-docker --quiet
+          docker build -t $IMAGE_NAME .
+          docker push $IMAGE_NAME
 
-      # Construir e enviar a imagem Docker para Google Container Registry
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          push: true
-          tags: gcr.io/${{ secrets.GCP_PROJECT_ID }}/my-vite-app:latest
+      - name: Push image
+        run: docker push $IMAGE_NAME
 
-      # Fazer deploy da imagem no Google Cloud Run
-      - name: Deploy to Google Cloud Run
-        run: |
-          gcloud run deploy my-vite-app \
-            --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/my-vite-app:latest \
-            --platform managed \
-            --region us-central1 \
-            --allow-unauthenticated
+      - name: gcloud deploy
+        run: gcloud run deploy todolist-app --image $IMAGE_NAME --region us-central1
