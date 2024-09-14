@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      IMAGE_NAME: gcr.io/${{ secrets.GCP_PROJECT_ID }}/todolist-image:latest
+      IMAGE_NAME: gcr.io/pucpr-devops/todolist-image:latest
 
     steps:
       - name: Checkout
