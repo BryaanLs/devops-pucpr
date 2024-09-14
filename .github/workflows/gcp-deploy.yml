@@ -26,11 +26,13 @@ jobs:
 
       - name: Build Docker image
         run: |
+          echo "Buildando imagem"
           docker build -t $IMAGE_NAME .
-          docker push $IMAGE_NAME
 
       - name: Push image
-        run: docker push $IMAGE_NAME
+        run: |
+          echo "Fazendo push para o A.R"
+          docker push $IMAGE_NAME
 
       - name: gcloud deploy
         run: gcloud run deploy todolist-app --image $IMAGE_NAME --region us-central1
