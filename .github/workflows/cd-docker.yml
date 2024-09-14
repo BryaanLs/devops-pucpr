@@ -1,0 +1,35 @@
+name: Delivery image in the docker
+
+on:
+  pull_request:
+    branches:
+      - main
+env:
+  TAG_NAME: ${{ secrets.DOCKER_USERNAME }}/todolist-app
+
+jobs:
+  delivery:
+    name: Delivery image on docker-hub
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Docker login
+        run: |
+          docker login
+          -u ${{ secrets.DOCKER_USERNAME }}
+          -p ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Docker build image
+        run: |
+          docker build -t todolist-app .
+
+      - name: Docker tag image
+        run: |
+          docker tag todolist-app $TAG_NAME
+
+      - name: Docker push image
+        run: |
+          docker push $TAG_NAME
