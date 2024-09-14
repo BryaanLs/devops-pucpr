@@ -10,8 +10,8 @@ jobs:
     name: Deploy to Cloud Run
     runs-on: ubuntu-latest
 
-    env:
-      IMAGE_NAME: gcr.io/${{ secrets.GCP_PROJECT_ID }}/todolist-image:latest
+    # env:
+    #   IMAGE_NAME: gcr.io//todolist-image:latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -27,12 +27,12 @@ jobs:
       - name: Build Docker image
         run: |
           echo "Buildando imagem"
-          docker build -t $IMAGE_NAME .
+          docker build -t gcr.io/devops-pucpr-435618/todolist-image:latest .
 
       - name: Push image
         run: |
           echo "Fazendo push para o A.R"
-          docker push $IMAGE_NAME
+          docker push gcr.io/devops-pucpr-435618/todolist-image:latest
 
       - name: gcloud deploy
-        run: gcloud run deploy todolist-app --image $IMAGE_NAME --region us-central1
+        run: gcloud run deploy todolist-app --image gcr.io/devops-pucpr-435618/todolist-image:latest --region us-central1
