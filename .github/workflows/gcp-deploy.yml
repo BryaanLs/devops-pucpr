@@ -28,12 +28,12 @@ jobs:
       - name: Build Docker image
         run: |
           echo "Building Docker image"
-          docker build -t ${{ env.IMAGE_NAME }} .
+          docker build -t gcr.io/pucpr-devops/todolist-image:latest .
 
       - name: Push image to Google Container Registry
         run: |
           echo "Pushing Docker image to Google Container Registry"
-          docker push ${{ env.IMAGE_NAME }}
+          docker push gcr.io/pucpr-devops/todolist-image:latest
 
       - name: Deploy to Cloud Run
         run: |
