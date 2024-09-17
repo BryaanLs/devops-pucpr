@@ -35,7 +35,7 @@ jobs:
                     },
                     {
                       "name": "🔗| Commit URL",
-                      "value": "👀| [View Commit](${{ github.event.head_commit.url }})"
+                      "value": "👀| [View Commit](${ { github.event.head_commit.url } })"
                     }
                   ],
                   "footer": {
