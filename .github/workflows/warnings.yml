@@ -15,36 +15,34 @@ jobs:
       - name: Send notification to Discord
         run: |
           curl -H "Content-Type: application/json" \
-          -d "$(cat <<EOF
-          {
-            "username": "Gandalf",
-            "embeds": [{
-              "title": "Novo push na branch: \"${{ github.ref_name }}\"",
-              "description": "**Autor:** ${GITHUB_ACTOR}\n**Mensagem:** ${GITHUB_EVENT_HEAD_COMMIT_MESSAGE}",
-              "url": "${GITHUB_EVENT_HEAD_COMMIT_URL}",
-              "color": 3447003,
-              "fields": [
-                {
-                  "name": "Repositório",
-                  "value": "${GITHUB_REPOSITORY}",
-                  "inline": true
-                },
-                {
-                  "name": "Branch",
-                  "value": "${GITHUB_REF_NAME}",
-                  "inline": true
-                },
-                {
-                  "name": "Commit URL",
-                  "value": "[View Commit](${GITHUB_EVENT_HEAD_COMMIT_URL})"
-                }
-              ],
-              "footer": {
-                "text": "GitHub Actions",
-                "icon_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
-              },
-              "timestamp": "$(date --utc +%FT%TZ)"
-            }]
-          }
-          )" \
+          -d '{
+                "username": "Gandalf💍",
+                "embeds": [{
+                  "title": "🫸🏻|Novo push na branch: '${{ github.ref_name }}'",
+                  "description": "**🙋🏻|Autor:** '${{ github.actor }}'\n**📨|Mensagem:** '${{ github.event.head_commit.message }}'",
+                  "url": "'${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}'",
+                  "color": 3447003,
+                  "fields": [
+                    {
+                      "name": "📦|Repository",
+                      "value": "'${{ github.repository }}'",
+                      "inline": true
+                    },
+                    {
+                      "name": "🌿|Branch",
+                      "value": "'${{ github.ref_name }}'",
+                      "inline": true
+                    },
+                    {
+                      "name": "🔗|Commit URL",
+                      "value": "[View Commit]('${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}')"
+                    }
+                  ],
+                  "footer": {
+                    "text": "GitHub Actions",
+                    "icon_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+                  },
+                  "timestamp": "'$(date --utc +%FT%TZ)'"
+                }]
+              }' \
           "${{ secrets.DISCORD_WEBHOOK_URL }}"
