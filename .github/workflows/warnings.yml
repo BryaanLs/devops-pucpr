@@ -31,17 +31,17 @@ jobs:
                   "fields": [
                     {
                       "name": "Repository",
-                      "value": "$REPO_NAME",
+                      "value": "'${{ env.REPO_NAME }}'",
                       "inline": true
                     },
                     {
                       "name": "Branch",
-                      "value": "$BRANCH",
+                      "value": "'${{ env.BRANCH }}'",
                       "inline": true
                     },
                     {
                       "name": "Commit URL",
-                      "value": "[View Commit](${{ env.COMMIT_URL }})"
+                      "value": "[View Commit](${COMMIT_URL})"
                     }
                   ],
                   "footer": {
@@ -51,4 +51,6 @@ jobs:
                   "timestamp": "'$(date --utc +%FT%TZ)'"
                 }]
               }' \
-          "${{ secrets.DISCORD_WEBHOOK_URL }}"
+          "$DISCORD_WEBHOOK"
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL }}
