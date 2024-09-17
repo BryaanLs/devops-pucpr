@@ -35,7 +35,7 @@ jobs:
                     },
                     {
                       "name": "🔗|Commit URL",
-                      "value": "[View Commit]('${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}')"
+                      "value": "👀|[View Commit]('${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}')"
                     }
                   ],
                   "footer": {
