@@ -16,33 +16,33 @@ jobs:
         run: |
           curl -H "Content-Type: application/json" \
           -d '{
-                "username": "Gandalf💍",
-                "embeds": [{
-                    "title": "🫸🏻| Novo push na branch: 'feature/awesome-feature'",
-                    "description": "**🙋🏻| Autor:** 'johndoe'\n**📨| Mensagem:** 'Adiciona nova funcionalidade incrível'",
-                    "url": "https://github.com/my-repo/commit/1234567890abcdef",
-                    "color": 3447003,
-                    "fields": [
-                    {
-                        "name": "📦| Repository",
-                        "value": "my-repo",
-                        "inline": true
-                    },
-                    {
-                        "name": "🌿| Branch",
-                        "value": "feature/awesome-feature",
-                        "inline": true
-                    },
-                    {
-                        "name": "🔗| Commit URL",
-                        "value": "👀| [View Commit](https://github.com/my-repo/commit/1234567890abcdef)"
-                    }
-                    ],
-                    "footer": {
-                    "text": "GitHub Actions",
-                    "icon_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
-                    },
-                    "timestamp": "2024-09-17T12:34:56Z"
-                    }]
-            }' \
-          "${{ secrets.DISCORD_WEBHOOK_URL }}"
+          "username": "Gandalf💍",
+          "embeds": [{
+              "title": "🫸🏻| Novo push na branch: \"feature/awesome-feature\"",
+              "description": "**🙋🏻| Autor:** \"johndoe\"\n**📨| Mensagem:** \"Adiciona nova funcionalidade incrível\"",
+              "url": "https://github.com/my-repo/commit/1234567890abcdef",
+              "color": 3447003,
+              "fields": [
+                  {
+                  "name": "📦| Repository",
+                  "value": "my-repo",
+                  "inline": true
+                  },
+                  {
+                  "name": "🌿| Branch",
+                  "value": "feature/awesome-feature",
+                  "inline": true
+                  },
+                  {
+                  "name": "🔗| Commit URL",
+                  "value": "👀| [View Commit](https://github.com/my-repo/commit/1234567890abcdef)"
+                  }
+              ],
+              "footer": {
+                  "text": "GitHub Actions",
+                  "icon_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+              },
+              "timestamp": "2024-09-17T12:34:56Z"
+              }]
+          }' \
+          "https://discord.com/api/webhooks/1285716603056685189/8j9ZhffRUPAEHtN2VtcGG-qC6BPndfAKDgSO62AdFGPyJTFvY-qb-zzOtPliOExW3UN6"
