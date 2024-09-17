@@ -18,8 +18,8 @@ jobs:
           -d '{
                 "username": "Gandalf💍",
                 "embeds": [{
-                  "title": "🫸🏻| Novo push na branch: \"'${{ github.ref_name }}'\"",
-                  "description": "**🙋🏻| Autor:** \"'${{ github.actor }}'\"\n**📨| Mensagem:** \"'${{ github.event.head_commit.message }}'\"",
+                  "title": "🫸🏻| Novo push na branch: '${{ github.ref_name }}'",
+                  "description": "**🙋🏻| Autor:** '${{ github.actor }}'\n**📨| Mensagem:** '${{ github.event.head_commit.message }}'",
                   "url": "'${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}'",
                   "color": 3447003,
                   "fields": [
