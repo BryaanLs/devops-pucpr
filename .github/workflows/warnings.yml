@@ -17,32 +17,32 @@ jobs:
           curl -H "Content-Type: application/json" \
           -d '{
                 "username": "Gandalf💍",
-                "embeds": [ {
-                  "title": "🫸🏻| Novo push na branch: '${{ github.ref_name }}'",
-                  "description": "**🙋🏻| Autor:** '${{ github.actor }}'\n**📨| Mensagem:** '${{ github.event.head_commit.message }}'",
-                  "url": "${{ github.event.head_commit.url }}",
-                  "color": 3447003,
-                  "fields": [
+                "embeds": [{
+                    "title": "🫸🏻| Novo push na branch: 'feature/awesome-feature'",
+                    "description": "**🙋🏻| Autor:** 'johndoe'\n**📨| Mensagem:** 'Adiciona nova funcionalidade incrível'",
+                    "url": "https://github.com/my-repo/commit/1234567890abcdef",
+                    "color": 3447003,
+                    "fields": [
                     {
-                      "name": "📦| Repository",
-                      "value": "${{ github.repository }}",
-                      "inline": true
+                        "name": "📦| Repository",
+                        "value": "my-repo",
+                        "inline": true
                     },
                     {
-                      "name": "🌿| Branch",
-                      "value": "${{ github.ref_name }}",
-                      "inline": true
+                        "name": "🌿| Branch",
+                        "value": "feature/awesome-feature",
+                        "inline": true
                     },
                     {
-                      "name": "🔗| Commit URL",
-                      "value": "👀| [View Commit](${ { github.event.head_commit.url } })"
+                        "name": "🔗| Commit URL",
+                        "value": "👀| [View Commit](https://github.com/my-repo/commit/1234567890abcdef)"
                     }
-                  ],
-                  "footer": {
+                    ],
+                    "footer": {
                     "text": "GitHub Actions",
                     "icon_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
-                  },
-                  "timestamp": "${{ github.event.head_commit.timestamp }}"
-                }]
-              }' \
+                    },
+                    "timestamp": "2024-09-17T12:34:56Z"
+                    }]
+            }' \
           "${{ secrets.DISCORD_WEBHOOK_URL }}"
